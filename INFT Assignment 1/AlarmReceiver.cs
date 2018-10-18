@@ -25,8 +25,9 @@ namespace INFT_Assignment_1
             .SetContentTitle("Speedyboy")
             .SetSmallIcon(Resource.Drawable.alarm)
             .SetContentText("test")
-            .SetContentInfo("Info")
-            .SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Ringtone)); // Make phone ring like a call
+            .SetContentInfo("Info");
+            //using this will bug the program
+            //.SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Ringtone)); // Make phone ring like a call
 
             NotificationManager manager = (NotificationManager)context.GetSystemService(Context.NotificationService);
             manager.Notify(234, builder.Build());
@@ -34,8 +35,9 @@ namespace INFT_Assignment_1
 
             //Intent i = new Intent(this, typeof(AlarmActivated));
             intent.SetClass(Android.App.Application.Context, typeof(AlarmActivated));
-            intent.SetFlags(ActivityFlags.NewTask); 
+            intent.SetFlags(ActivityFlags.NewTask);
             context.StartActivity(intent);
+
 
 
 
