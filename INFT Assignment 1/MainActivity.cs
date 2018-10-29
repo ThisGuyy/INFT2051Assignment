@@ -73,6 +73,7 @@ namespace INFT_Assignment_1
                 //var alarmIntent = new Intent(this, typeof(AlarmReceiver));
                 //alarmIntent.PutExtra("title", "Hello");
                 //alarmIntent.PutExtra("message", "World!");
+                // testing
 
                 //var pending = PendingIntent.GetBroadcast(this, 0, alarmIntent, PendingIntentFlags.UpdateCurrent);
 
