@@ -23,11 +23,13 @@ namespace INFT_Assignment_1
         Button btnStart;
         Button btnPause;
         Button btnLap;
-        Button btnAlarmDate;
-        Button btnAlarmTime;
+        //Button btnAlarmDate;
+        //Button btnAlarmTime;
         Timer timer;
         LinearLayout container;
         int mins = 0, secs = 0, millisecond = 1;
+        //Android.Icu.Util.Calendar calendar;
+        DatePickerDialog.DateSetEventArgs date;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -36,13 +38,12 @@ namespace INFT_Assignment_1
 
             textMessage = FindViewById<TextView>(Resource.Id.message);
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
-            addalarm = FindViewById<Button>(Resource.Id.addalarm);
             txtTimer = FindViewById<TextView>(Resource.Id.txtTimer);
             btnStart = FindViewById<Button>(Resource.Id.btnStart);
             btnPause = FindViewById<Button>(Resource.Id.btnPause);
             btnLap = FindViewById<Button>(Resource.Id.btnLap);
-            btnAlarmDate = FindViewById<Button>(Resource.Id.btnAlarmDate);
-            btnAlarmDate = FindViewById<Button>(Resource.Id.btnAlarmDate);
+            addalarm = FindViewById<Button>(Resource.Id.addalarm);
+
 
             btnStart.Click += delegate {
                 if (timer == null)
@@ -74,40 +75,79 @@ namespace INFT_Assignment_1
 
             addalarm.Click += delegate
             {
-                //var alarmIntent = new Intent(this, typeof(AlarmReceiver));
-                //alarmIntent.PutExtra("title", "Hello");
-                //alarmIntent.PutExtra("message", "World!");
-                // testing
-
-                //var pending = PendingIntent.GetBroadcast(this, 0, alarmIntent, PendingIntentFlags.UpdateCurrent);
-
-                //var alarmManager = GetSystemService(AlarmService).JavaCast<AlarmManager>();
-                // alarmManager.Set(AlarmType.ElapsedRealtime, SystemClock.ElapsedRealtime() + 6 * 1000, pending);
-                SetContentView(Resource.Layout.activity_choose_time);
-                //Log.Debug("SO", "tTESTESTESTESTESTSETESTESTSETESTESTESTESTESTESTESTESTESTESTES");
-
-                DateTime today = DateTime.Today;
+               DateTime today = DateTime.Today;
                 DatePickerDialog dialog = new DatePickerDialog(this, OnDateSet, today.Year, today.Month - 1, today.Day);
+                //the minimum day to pick is today
                 dialog.DatePicker.MinDate = today.Millisecond;
                 dialog.Show();
 
-                using (var manager = (Android.App.AlarmManager)GetSystemService(AlarmService))
-                using (var calendar = Calendar.Instance)
-                {
-                    calendar.Add(CalendarField.Second, 5);
-                    Log.Debug("SO", $"Current date is   : {Calendar.Instance.Time.ToString()}");
-                    Log.Debug("SO", $"Alarm will fire at {calendar.Time.ToString()}");
-                    var alarmIntent = new Intent(ApplicationContext, typeof(AlarmReceiver));
-                    var pendingIntent = PendingIntent.GetBroadcast(this, 0, alarmIntent, PendingIntentFlags.OneShot);
-                    manager.SetExact(AlarmType.RtcWakeup, calendar.TimeInMillis, pendingIntent);
-                }
-                
+
             };
         }
         void OnDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
         {
-            btnAlarmDate.Text = e.Date.ToLongDateString();
+            date = e;//.ToLongDateString();
+            DateTime dt = DateTime.Now;
+
+            var _hour = dt.Hour;
+            var _min = dt.Minute;
+
+
+            DateTime today = DateTime.Today;
+            TimePickerDialog dialog = new TimePickerDialog(this, OntimeSet, _hour, _min, true);
+            dialog.Show();
         }
+
+        private void OntimeSet(object sender, TimePickerDialog.TimeSetEventArgs e)
+        {
+            DateTime dt = DateTime.Now;
+            var minute = 0;
+            var hour = 0;
+            //Log.Debug("SO", "tTESTESTESTESTESTSETESTESTSETESTESTESTESTESTESTESTESTESTESTES" + date + " and " + e.HourOfDay + "with minute" + e.Minute);
+            if (dt.Hour < e.HourOfDay)
+            {
+                hour = e.HourOfDay - dt.Hour;
+                Log.Debug("SO", "the countdown in hours (current is more) is: " + hour);
+            }
+            else if (dt.Hour > e.HourOfDay) {
+                hour = dt.Hour - e.HourOfDay;
+                Log.Debug("SO", "the countdown in hours (current is less) is: " + hour);
+            }
+            if (hour != 0)
+            {
+                //the last hour is irrelevant as we will use Minute for more precision
+                hour--;
+            }
+            
+            if (dt.Minute < e.Minute)
+            {
+                minute = Math.Abs(dt.Minute - e.Minute);
+            }
+            else if (dt.Minute > e.Minute)
+            {
+                minute = (60 - dt.Minute) + e.Minute;
+            }
+            //minute is difference in time from current to chosen minute
+            Log.Debug("SO", "the countdown in minutes is: " + minute);
+            using (var manager = (Android.App.AlarmManager)GetSystemService(AlarmService))
+                using (var calendar = Calendar.Instance)
+                {
+                calendar.Add(CalendarField.Minute, minute);
+                calendar.Add(CalendarField.Hour, hour);
+                //calendar.Add(CalendarField.DayOfMonth, date.DayOfMonth);
+                //calendar.Add(CalendarField.Month, date.Month);
+
+                Log.Debug("SO", "tTESTESTESTESTESTSETESTESTSETESTESTESTESTESTESTESTESTESTESTES" + minute + " and hour " + hour + " and day of month" + date.DayOfMonth + "and month" + date.Month);
+                Log.Debug("SO", "Calendar" + calendar.TimeInMillis + "normal time: " + calendar.Time);
+
+                Log.Debug("SO", $"Current date is   : {Calendar.Instance.Time.ToString()}");
+                Log.Debug("SO", $"Alarm will fire at {calendar.Time.ToString()}");
+                var alarmIntent = new Intent(ApplicationContext, typeof(AlarmReceiver));
+                var pendingIntent = PendingIntent.GetBroadcast(this, 0, alarmIntent, PendingIntentFlags.OneShot);
+                manager.SetExact(AlarmType.RtcWakeup, calendar.TimeInMillis, pendingIntent);
+                }
+        }
+
 
         //taken from: https://www.c-sharpcorner.com/article/xamarin-android-stop-watch-milliseconds/
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
