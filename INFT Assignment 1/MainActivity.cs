@@ -38,7 +38,7 @@ namespace INFT_Assignment_1
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
-
+            txtTimer.Visibility = ViewStates.Invisible;
             textMessage = FindViewById<TextView>(Resource.Id.message);
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
             txtTimer = FindViewById<TextView>(Resource.Id.txtTimer);
