@@ -5,6 +5,7 @@ using System.Text;
 using Android;
 using Android.App;
 using Android.Content;
+using Android.Hardware;
 using Android.Locations;
 using Android.Media;
 using Android.OS;
@@ -21,7 +22,7 @@ using Square.Picasso;
 namespace INFT_Assignment_1
 {
     [Activity(Label = "AlarmActivated", ShowForAllUsers = true)]
-    public class AlarmActivated : Activity, ISerializable, ILocationListener
+    public class AlarmActivated : Activity, ISerializable, ILocationListener, Android.Hardware.ISensorEventListener
     {
         Button okalarm;
         TextView txtCity, txtLastUpdate, txtDescription, txtHumidity, txtTime, txtCelsius;
@@ -33,6 +34,13 @@ namespace INFT_Assignment_1
         static double lat, lng;
         OpenWeatherMap openWeatherMap = new OpenWeatherMap();
         private bool canGetLocation;
+        bool hasUpdated = false;
+        DateTime lastUpdate;
+        float last_x = 0.0f;
+        float last_y = 0.0f;
+        float last_z = 0.0f;
+        const int ShakeDetectionTimeLapse = 250;
+        const double ShakeThreshold = 800;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -56,6 +64,10 @@ namespace INFT_Assignment_1
                 MainActivity.player.Stop();
                 this.StartActivity(typeof(MainActivity));
             };
+
+            var sensorManager = GetSystemService(SensorService) as Android.Hardware.SensorManager;
+            var sensor = sensorManager.GetDefaultSensor(Android.Hardware.SensorType.Accelerometer);
+            sensorManager.RegisterListener(this, sensor, Android.Hardware.SensorDelay.Game);
 
             MainActivity.player = MediaPlayer.Create(Application.Context, RingtoneManager.GetDefaultUri(RingtoneType.Ringtone));
             MainActivity.player.Start();
@@ -163,6 +175,52 @@ namespace INFT_Assignment_1
         public void OnProviderDisabled(string provider) { }
         public void OnProviderEnabled(string provider) { }
         public void OnStatusChanged(string provider, [GeneratedEnum] Availability status, Bundle extras) { }
+
+        void ISensorEventListener.OnAccuracyChanged(Sensor sensor, SensorStatus accuracy)
+        {
+        }
+
+        void ISensorEventListener.OnSensorChanged(SensorEvent e)
+        {
+            if (e.Sensor.Type == Android.Hardware.SensorType.Accelerometer)
+            {
+                float x = e.Values[0];
+                float y = e.Values[1];
+                float z = e.Values[2];
+
+                DateTime curTime = System.DateTime.Now;
+                if (hasUpdated == false)
+                {
+                    hasUpdated = true;
+                    lastUpdate = curTime;
+                    last_x = x;
+                    last_y = y;
+                    last_z = z;
+                }
+                else
+                {
+                    if ((curTime - lastUpdate).TotalMilliseconds > ShakeDetectionTimeLapse)
+                    {
+                        float diffTime = (float)(curTime - lastUpdate).TotalMilliseconds;
+                        lastUpdate = curTime;
+                        float total = x + y + z - last_x - last_y - last_z;
+                        float speed = System.Math.Abs(total) / diffTime * 10000;
+
+                        if (speed > ShakeThreshold)
+                        {
+                            //Toast.MakeText(this, "shake detected w/ speed: " + speed, ToastLength.Short).Show();
+                            MainActivity.player.Stop();
+                            this.StartActivity(typeof(MainActivity));
+                        }
+
+                        last_x = x;
+                        last_y = y;
+                        last_z = z;
+                    }
+                }
+            }
+        }
+
         private class GetWeather : AsyncTask<string, Java.Lang.Void, string>
         {
             private ProgressDialog pd = new ProgressDialog(Application.Context);
