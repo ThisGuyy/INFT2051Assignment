@@ -22,9 +22,9 @@ namespace INFT_Assignment_1
             Toast.MakeText(context, "THIS IS MY ALARM", ToastLength.Long).Show();
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "my_channel_01")
             .SetAutoCancel(true)
-            .SetContentTitle("Speedyboy")
+            .SetContentTitle("Alarm!")
             .SetSmallIcon(Resource.Drawable.alarm)
-            .SetContentText("test")
+            .SetContentText("Your alarm went off!")
             .SetContentInfo("Info");
             //using this will bug the program
             //.SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Ringtone)); // Make phone ring like a call
@@ -37,8 +37,6 @@ namespace INFT_Assignment_1
             intent.SetClass(Android.App.Application.Context, typeof(AlarmActivated));
             intent.SetFlags(ActivityFlags.NewTask);
             context.StartActivity(intent);
-
-
 
 
         }

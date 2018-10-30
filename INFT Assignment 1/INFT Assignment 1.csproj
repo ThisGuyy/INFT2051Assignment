@@ -59,7 +59,10 @@
     <Compile Include="AlarmPicker.cs" />
     <Compile Include="AlarmActivated.cs" />
     <Compile Include="AlarmReceiver.cs" />
+    <Compile Include="Common.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="OpenWeatherMap.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -102,7 +105,16 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>11.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Square.Picasso">
+      <Version>2.5.2.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat">
+      <Version>27.0.2.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\profile.png" />

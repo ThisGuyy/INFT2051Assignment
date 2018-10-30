@@ -17,6 +17,13 @@
 		android:textStyle="bold"
 		android:textSize="25.5sp" 
 		/>
+		<Button
+		android:id="@+id/okalarm"
+		android:layout_width="384.0dp"
+		android:layout_height="wrap_content"
+		android:text="Continue"
+		android:textStyle="bold"
+		android:textSize="33.5sp" />
 	<TextView
 		android:id="@+id/wakeupmessage2"
 		android:layout_width="wrap_content"
@@ -35,11 +42,53 @@
 		android:layout_below="@id/wakeupmessage"
 		android:textStyle="bold"
 		android:textSize="25.5sp" />
-	<Button
-		android:id="@+id/okalarm"
-		android:layout_width="384.0dp"
-		android:layout_height="wrap_content"
-		android:text="Continue"
-		android:textStyle="bold"
-		android:textSize="33.5sp" />
+	<TextView
+        android:id="@+id/txtCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text=""
+        android:textSize="36sp"
+        android:gravity="center" />
+    <TextView
+        android:id="@+id/txtLastUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="16sp"
+        android:gravity="center" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtDescription"
+        android:text=""
+        android:textSize="30sp"
+        android:gravity="center" />
+    <TextView
+        android:id="@+id/txtHumidity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="30sp"
+        android:gravity="center" />
+    <TextView
+        android:id="@+id/txtTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="36sp"
+        android:gravity="center" />
+    <TextView
+        android:id="@+id/txtCelsius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="80sp"
+        android:gravity="center" />
+
 </LinearLayout>
