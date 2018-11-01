@@ -16,7 +16,7 @@ using System.Timers;
 
 namespace INFT_Assignment_1
 {
-    [Activity(Label = "@string/app_name", ShowForAllUsers = true, Theme = "@style/AppTheme", MainLauncher = true)]
+    [Activity(Label = "Swiss Alarmy Knife",Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity, BottomNavigationView.IOnNavigationItemSelectedListener
     {
         public static Android.Media.MediaPlayer player { get; set; }

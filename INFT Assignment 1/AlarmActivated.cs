@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 using Square.Picasso;
 namespace INFT_Assignment_1
 {
-    [Activity(Label = "AlarmActivated", ShowForAllUsers = true)]
+    [Activity(Label = "AlarmActivated")]
     public class AlarmActivated : Activity, ISerializable, ILocationListener, Android.Hardware.ISensorEventListener
     {
         Button okalarm;
@@ -40,7 +40,7 @@ namespace INFT_Assignment_1
         float last_y = 0.0f;
         float last_z = 0.0f;
         const int ShakeDetectionTimeLapse = 250;
-        const double ShakeThreshold = 800;
+        const double ShakeThreshold = 3200;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -264,12 +264,12 @@ namespace INFT_Assignment_1
                 activity.txtCelsius = activity.FindViewById<TextView>(Resource.Id.txtCelsius);
                 activity.imgView = activity.FindViewById<ImageView>(Resource.Id.imageView);
 
-                activity.txtCity.Text = $"{openWeatherMap.name},{openWeatherMap.sys.country}";
-                activity.txtLastUpdate.Text = $"Last Updated:{DateTime.Now.ToString("dd MMMM yyyy HH: mm ")}";
-                activity.txtHumidity.Text = $"Humidity: {openWeatherMap.main.humidity} %";
-                activity.txtTime.Text = $"{Common.UnixTimeStampToDateTime(openWeatherMap.sys.sunrise).ToString("HH: mm ")}/" +
-                                   $"{Common.UnixTimeStampToDateTime(openWeatherMap.sys.sunset).ToString("HH: mm ")}";
-                activity.txtCelsius.Text = $"{openWeatherMap.main.temp} °C";
+                activity.txtCity.Text = $"{openWeatherMap.name}, {openWeatherMap.sys.country}";
+                activity.txtLastUpdate.Text = $"Last Updated: {DateTime.Now.ToString("dd MMMM yyyy HH:mm ")}";
+                activity.txtHumidity.Text = $"Humidity: {openWeatherMap.main.humidity}%";
+                activity.txtTime.Text = $"{Common.UnixTimeStampToDateTime(openWeatherMap.sys.sunrise).ToString("SUNRISE: HH:mm")} " +
+                                   $"{Common.UnixTimeStampToDateTime(openWeatherMap.sys.sunset).ToString("SUNSET: HH:mm")}";
+                activity.txtCelsius.Text = $"{openWeatherMap.main.temp}°C";
                 if (!string.IsNullOrEmpty(openWeatherMap.weather[0].icon))
                 {
                     Picasso.With(activity.ApplicationContext).Load(Common.GetImage(openWeatherMap.weather[0].icon)).Into(activity.imgView);

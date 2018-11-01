@@ -1,87 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/parentcontainer"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:background="#ffe0f7fa">
-	<android.support.design.widget.BottomNavigationView
-		android:id="@+id/navigation"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginEnd="0dp"
-		android:layout_marginStart="0dp"
-		android:background="#ff84ffff"
-		android:layout_alignParentBottom="true"
-		app:menu="@menu/navigation"
-		android:layout_above="@id/navigation" />
-
-	<Button
-		android:id="@+id/addalarm"
-		android:layout_width="384.0dp"
-		android:layout_height="wrap_content"
-		android:text="Click me"
-		android:layout_above="@id/navigation" />
-	<LinearLayout  
-		android:orientation="vertical"  
-        android:layout_width="match_parent"  
-        android:layout_height="wrap_content">  
-	<TextView  
-        android:id="@+id/txtTimer"  
-        android:text="0:00:000"  
-        android:textAppearance="?android:attr/textAppearanceLarge"  
-        android:layout_width="wrap_content"  
-        android:layout_height="wrap_content"  
-        android:textSize="40sp"  
-        android:layout_gravity="center_horizontal"  
-        android:layout_marginTop="20dp"  
-        android:layout_marginBottom="10dp"  />
-
-	<LinearLayout  
-        android:orientation="horizontal"  
-        android:layout_width="match_parent"  
-        android:layout_height="wrap_content">  
-
-        <Button
-            android:id="@+id/btnStart"
-            android:text="Start"  
-			android:visibility = "invisible"
-            android:layout_width="0dp"  
-            android:layout_weight="1"  
-            android:layout_height="wrap_content" />  
-        <Button  
-            android:id="@+id/btnPause"
-			android:text="Pause"  
-			android:visibility = "invisible"
-            android:layout_width="0dp"  
-            android:layout_weight="1"  
-            android:layout_height="wrap_content" />  
-        <Button  
-			android:id="@+id/btnLap"
-            android:text="Lap"  
-			android:visibility = "invisible"
-            android:layout_width="0dp"  
-            android:layout_weight="1"  
-            android:layout_height="wrap_content" />  
-    </LinearLayout>  
-		    <LinearLayout  
-    android:orientation="vertical"  
-    android:layout_width="match_parent"  
-    android:layout_height="wrap_content">  
-	<ScrollView  
-	android:layout_width="match_parent"  
-	android:layout_height="wrap_content">  
-		<LinearLayout      
-		    android:orientation="vertical"  
-		    android:layout_width="match_parent"  
-		    android:layout_height="wrap_content"  
-		    android:id="@+id/container">  
-		</LinearLayout>  
-    </ScrollView>	
-    </LinearLayout>  
-	</LinearLayout>  
-
-
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentcontainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffe0f7fa">
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="#ff84ffff"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/navigation"
+        android:layout_above="@id/navigation" />
+    <Button
+        android:id="@+id/addalarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Alarm"
+        android:layout_above="@id/navigation" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txtTimer"
+            android:text="0:00:000"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btnStart"
+                android:text="Start"
+                android:visibility="invisible"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btnPause"
+                android:text="Pause"
+                android:visibility="invisible"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btnLap"
+                android:text="Lap"
+                android:visibility="invisible"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/container" />
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
