@@ -94,12 +94,13 @@ namespace INFT_Assignment_1
 
             addalarm.Click += delegate
             {
-               DateTime today = DateTime.Today;
+                DateTime today = DateTime.Today;
                 DatePickerDialog dialog = new DatePickerDialog(this, OnDateSet, today.Year, today.Month - 1, today.Day);
                 //the minimum day to pick is today
                 dialog.DatePicker.MinDate = today.Millisecond;
                 dialog.Show();
 
+  
 
             };
         }
@@ -166,6 +167,14 @@ namespace INFT_Assignment_1
                 var pendingIntent = PendingIntent.GetBroadcast(this, 0, alarmIntent, PendingIntentFlags.OneShot);
                 manager.SetExact(AlarmType.RtcWakeup, calendar.TimeInMillis, pendingIntent);
                 }
+            DateTime today = DateTime.Today;
+            LayoutInflater inflater = (LayoutInflater)BaseContext.GetSystemService(Context.LayoutInflaterService);
+            View addView = inflater.Inflate(Resource.Layout.row, null);
+            TextView textContent = addView.FindViewById<TextView>(Resource.Id.textView1);
+            container = FindViewById<LinearLayout>(Resource.Id.container);
+            //textContent.Text = "Alarm in : " + hour + " Hours and " + minute + " Minutes";
+            textContent.Text = "Alaram Set for : " + e.HourOfDay + ":" + e.Minute + " - " + date.Date.Day + "/" + date.Date.Month;
+            container.AddView(addView);
         }
 
 
